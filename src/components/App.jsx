@@ -15,26 +15,24 @@ export class App extends React.Component {
   handleOnChange = (event) => {
     this.setState({ filter: event.target.value })
   }
-
-  handleSubmit = (event) => {
-    event.preventDefault();
-    const fieldName = event.currentTarget.elements.name.value;
-    const existContact = this.state.contacts.find((contact) => { return contact.name === fieldName });
+  onAddContact = (contact) => {
+    const existContact = this.state.contacts.find((contactApp) => { return contactApp.name === contact.name });
     if (existContact !== undefined) {
-      alert(fieldName + " is already in contacts.");
-      event.currentTarget.reset();
+      alert(contact.name + " is already in contacts.");
       return;
     }
-    const fieldNumber = event.currentTarget.elements.number.value;
-    this.setState({ contacts: [...this.state.contacts, { name: fieldName, id: nanoid(), number: fieldNumber }] });
-    event.currentTarget.reset();
+    const finalContact = {
+      id: nanoid(),
+      ...contact
+    }
+    this.setState({ contacts: [...this.state.contacts, finalContact] });
 
-  };
+  }
   render() {
     return (
       <AppStyled>
         <h1>Phonebook</h1>
-        <ContactForm handleSubmit={this.handleSubmit} />
+        <ContactForm onAddContact={this.onAddContact} />
         <h2>Contacts</h2>
         <Filter filter={this.state.filter} handleOnChange={this.handleOnChange} />
         <ContactList contacts={this.state.contacts} filter={this.state.filter} handleClickDelete={this.handleClickDelete} />

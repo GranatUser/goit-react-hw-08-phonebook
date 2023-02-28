@@ -1,9 +1,19 @@
 import React from "react";
 import PropTypes from 'prop-types';
 export class ContactForm extends React.Component {
+    handleSubmit = (event) => {
+        event.preventDefault();
+        const contact = {
+            name: event.currentTarget.elements.name.value,
+            number: event.currentTarget.elements.number.value
+        }
+
+        this.props.onAddContact(contact);
+        event.currentTarget.reset();
+    };
     render() {
         return (
-            <form onSubmit={this.props.handleSubmit}>
+            <form onSubmit={this.handleSubmit}>
                 <label>
                     <b>Name</b><br />
                     <input
@@ -34,5 +44,5 @@ export class ContactForm extends React.Component {
 }
 
 ContactForm.propTypes = {
-    handleSubmit: PropTypes.func.isRequired
+    onAddContact: PropTypes.func.isRequired
 }
