@@ -28,6 +28,9 @@ export class App extends React.Component {
     this.setState({ contacts: [...this.state.contacts, finalContact] });
 
   }
+  getFilterContacts = () => {
+    return this.state.contacts.filter((contact) => { return contact.name.toLowerCase().includes(this.state.filter.toLowerCase()) });
+  }
   render() {
     return (
       <AppStyled>
@@ -35,7 +38,7 @@ export class App extends React.Component {
         <ContactForm onAddContact={this.onAddContact} />
         <h2>Contacts</h2>
         <Filter filter={this.state.filter} handleOnChange={this.handleOnChange} />
-        <ContactList contacts={this.state.contacts} filter={this.state.filter} handleClickDelete={this.handleClickDelete} />
+        <ContactList contacts={this.getFilterContacts()} handleClickDelete={this.handleClickDelete} />
       </AppStyled>
 
     );
