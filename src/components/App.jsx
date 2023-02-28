@@ -10,18 +10,7 @@ export class App extends React.Component {
     filter: ''
   }
   handleClickDelete = (event) => {
-
-    const arr = [];
-    this.state.contacts.forEach((contact) => {
-      if (contact.id === event.currentTarget.id) {
-        return;
-      }
-      else {
-        arr.push(contact);
-      }
-
-    })
-    this.setState({ contacts: arr });
+    this.setState({ contacts: this.state.contacts.filter((contact) => { return contact.id !== event.currentTarget.id }) });
   }
   handleOnChange = (event) => {
     this.setState({ filter: event.target.value })
@@ -30,15 +19,14 @@ export class App extends React.Component {
   handleSubmit = (event) => {
     event.preventDefault();
     const fieldName = event.currentTarget.elements.name.value;
-    for (const contact of this.state.contacts) {
-      if (contact.name === fieldName) {
-        alert(fieldName + " is already in contacts.");
-        event.currentTarget.reset();
-        return;
-      }
+    const existContact = this.state.contacts.find((contact) => { return contact.name === fieldName });
+    if (existContact !== undefined) {
+      alert(fieldName + " is already in contacts.");
+      event.currentTarget.reset();
+      return;
     }
     const fieldNumber = event.currentTarget.elements.number.value;
-    this.setState({ contacts: this.state.contacts.concat([{ name: fieldName, id: nanoid(), number: fieldNumber }]) });
+    this.setState({ contacts: [...this.state.contacts, { name: fieldName, id: nanoid(), number: fieldNumber }] });
     event.currentTarget.reset();
 
   };
