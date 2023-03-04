@@ -6,8 +6,13 @@ import { ContactList } from "./ContactList";
 import { AppStyled } from '../App.Styled'
 export class App extends React.Component {
   state = {
-    contacts: [],
+    contacts: JSON.parse(localStorage.getItem("contacts")) ?? [],
     filter: ''
+  }
+  componentDidUpdate(_, prevState) {
+    if (prevState.contacts.length !== this.state.contacts.length) {
+      localStorage.setItem("contacts", JSON.stringify(this.state.contacts));
+    }
   }
   handleClickDelete = (event) => {
     this.setState({ contacts: this.state.contacts.filter((contact) => { return contact.id !== event.currentTarget.id }) });
