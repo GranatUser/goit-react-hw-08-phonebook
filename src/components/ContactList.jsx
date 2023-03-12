@@ -4,9 +4,10 @@ import PropTypes from 'prop-types';
 export function ContactList(props) {
     return (
         <ul>
-            {props.contacts.map((contact) => (<ItemContactForm id={contact.id} onClick={props.handleClickDelete} key={contact.id}>
-                {contact.name}: {contact.number}
-            </ItemContactForm>))}
+            {props.contacts.map((contact) => (
+                <ItemContactForm id={contact.id} onClick={props.handleClickDelete} key={contact.id}>
+                    {contact.name}: {contact.number}
+                </ItemContactForm>))}
         </ul>
     );
 }

@@ -6,8 +6,11 @@ import { ContactList } from "./ContactList";
 import { AppStyled } from '../App.Styled'
 export class App extends React.Component {
   state = {
-    contacts: JSON.parse(localStorage.getItem("contacts")) ?? [],
+    contacts: [],
     filter: ''
+  }
+  componentDidMount() {
+    this.setState({contacts: JSON.parse(localStorage.getItem("contacts"))})
   }
   componentDidUpdate(_, prevState) {
     if (prevState.contacts.length !== this.state.contacts.length) {
@@ -15,7 +18,10 @@ export class App extends React.Component {
     }
   }
   handleClickDelete = (event) => {
-    this.setState({ contacts: this.state.contacts.filter((contact) => { return contact.id !== event.currentTarget.id }) });
+    const currentId = event.currentTarget.id;
+    this.setState((prev) => {
+     return { contacts: (prev.contacts.filter((contact) => { return contact.id !== currentId })) }
+    });
   }
   handleOnChange = (event) => {
     this.setState({ filter: event.target.value })
@@ -30,7 +36,9 @@ export class App extends React.Component {
       id: nanoid(),
       ...contact
     }
-    this.setState({ contacts: [...this.state.contacts, finalContact] });
+    this.setState((prev) => {
+      return { contacts: [...prev.contacts, finalContact] }
+    });
 
   }
   getFilterContacts = () => {
