@@ -9,9 +9,11 @@ export class App extends React.Component {
     contacts: [],
     filter: ''
   }
+
   componentDidMount() {
     this.setState({contacts: JSON.parse(localStorage.getItem("contacts"))})
   }
+  
   componentDidUpdate(_, prevState) {
     if (prevState.contacts.length !== this.state.contacts.length) {
       localStorage.setItem("contacts", JSON.stringify(this.state.contacts));
