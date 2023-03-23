@@ -1,17 +1,16 @@
 import React from "react";
-import PropTypes from 'prop-types';
-export function ContactForm(props) {
+import { useDispatch } from "react-redux";
+import { addContact } from "../redux/actions";
+export function ContactForm() {
+
+    const dispatch = useDispatch();
     const handleSubmit = (event) => {
         event.preventDefault();
-        const contact = {
-            name: event.currentTarget.elements.name.value,
-            number: event.currentTarget.elements.number.value
-        }
-
-        props.onAddContact(contact);
+        const name = event.currentTarget.elements.name.value;
+        const number = event.currentTarget.elements.number.value;
+        dispatch(addContact(name,number))
         event.currentTarget.reset();
-    };
-
+   }
     return (
         <form onSubmit={handleSubmit}>
             <label>
@@ -40,9 +39,4 @@ export function ContactForm(props) {
             </button>
         </form>
     );
-}
-
-
-ContactForm.propTypes = {
-    onAddContact: PropTypes.func.isRequired
 }

@@ -1,22 +1,21 @@
 import { ItemContactForm } from "./ItemContactList";
-import PropTypes from 'prop-types';
-
-export function ContactList(props) {
+import { useSelector } from "react-redux";
+import { getContacts,getFilter } from "../redux/selectors";
+const getVisibleContacts = (contacts, filter) => {
+    if (filter.trim() === "") return contacts;
+    return contacts.filter((contact) => { return contact.name.toLowerCase().includes(filter.toLowerCase()) });
+}
+export function ContactList() {
+    const contacts = useSelector(getContacts);
+    const filter = useSelector(getFilter);
+    const visibleContacts=getVisibleContacts(contacts,filter)
+    localStorage.setItem("contacts", JSON.stringify(contacts));
     return (
         <ul>
-            {props.contacts.map((contact) => (
-                <ItemContactForm id={contact.id} onClick={props.handleClickDelete} key={contact.id}>
+            { visibleContacts.map((contact) => (
+                <ItemContactForm id ={contact.id}key={contact.id}>
                     {contact.name}: {contact.number}
                 </ItemContactForm>))}
         </ul>
     );
-}
-ContactList.propTypes = {
-    handleClickDelete: PropTypes.func.isRequired,
-    contacts: PropTypes.arrayOf(PropTypes.shape({
-        name: PropTypes.string.isRequired,
-        id: PropTypes.string.isRequired,
-        number: PropTypes.string.isRequired,
-    }
-    ).isRequired).isRequired
 }
