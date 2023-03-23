@@ -8,8 +8,8 @@ const getVisibleContacts = (contacts, filter) => {
 export function ContactList() {
     const contacts = useSelector(getContacts);
     const filter = useSelector(getFilter);
-    const visibleContacts=getVisibleContacts(contacts,filter)
-    localStorage.setItem("contacts", JSON.stringify(contacts));
+    const visibleContacts = getVisibleContacts(contacts, filter) ?? [];
+   
     return (
         <ul>
             { visibleContacts.map((contact) => (

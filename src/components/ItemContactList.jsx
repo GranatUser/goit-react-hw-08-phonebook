@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import { deleteContact } from '../redux/actions';
+import { deleteContact } from '../redux/contactsSlice';
 export function ItemContactForm(props) {
     const dispatch = useDispatch();
     return (
@@ -12,6 +12,6 @@ export function ItemContactForm(props) {
 }
 
 ItemContactForm.propTypes = {
-    id: PropTypes.string.isRequired ,
+  id: PropTypes.string.isRequired ,
     children: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired
 }
