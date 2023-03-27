@@ -1,8 +1,8 @@
-import { getFilter } from '../redux/selectors';
+import { selectFilter } from '../redux/selectors';
 import { useSelector, useDispatch } from 'react-redux';
 import { setFilter } from '../redux/filterSlice';
 export function Filter() {
-    const filter = useSelector(getFilter);
+    const filter = useSelector(selectFilter);
     const dispatch = useDispatch()
     return (
         <div className="contacts-finder">

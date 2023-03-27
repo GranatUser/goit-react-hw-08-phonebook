@@ -1,14 +1,11 @@
 import { ItemContactForm } from "./ItemContactList";
 import { useSelector } from "react-redux";
-import { getContacts,getFilter } from "../redux/selectors";
-const getVisibleContacts = (contacts, filter) => {
-    if (filter.trim() === "") return contacts;
-    return contacts.filter((contact) => { return contact.name.toLowerCase().includes(filter.toLowerCase()) });
-}
+import {selectVisibleContacts} from "../redux/selectors";
+
+
+
 export function ContactList() {
-    const contacts = useSelector(getContacts);
-    const filter = useSelector(getFilter);
-    const visibleContacts = getVisibleContacts(contacts, filter) ?? [];
+    const visibleContacts = useSelector(selectVisibleContacts) ;
    
     return (
         <ul>
