@@ -20,7 +20,7 @@ export const UserMenu = () => {
   }
   return (
     <UserMenuStyled >
-      <p>Welcome {email}</p>
+      <p>Welcome, <span>{email}</span></p>
       <button onClick={handleLogout} type="button">
         Logout
       </button>
