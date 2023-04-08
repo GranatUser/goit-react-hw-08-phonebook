@@ -9,6 +9,7 @@ export const AppBar = () => {
     const isLoggedIn =useSelector(selectIsLoggedIn);
 
     return (
+      
       <AppBarStyled>
         <Navigation />
         {isLoggedIn ? <UserMenu /> : <AuthNav />}

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { UserMenuStyled } from './UserMenu.styled';
 import { requestLogout } from '../../redux/user/operations';
 import { selectUserEmail} from '../../redux/user/selectors';
+import Button from '@mui/material/Button';
 import { toast } from 'react-toastify';
 export const UserMenu = () => {
   const email = useSelector(selectUserEmail);
@@ -21,9 +22,7 @@ export const UserMenu = () => {
   return (
     <UserMenuStyled >
       <p>Welcome, <span>{email}</span></p>
-      <button onClick={handleLogout} type="button">
-        Logout
-      </button>
+      <Button  onClick={handleLogout} type="button" variant="contained">Logout</Button>
     </UserMenuStyled>
   );
 };

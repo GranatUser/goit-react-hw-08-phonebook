@@ -7,6 +7,10 @@ import { selectIsLoggedIn } from "../../redux/user/selectors";
 import { toast } from "react-toastify";
 import { ItemContactForm } from "../ItemContactList/ItemContactList";
 import { selectVisibleContacts } from "../../redux/contacts/selectors";
+
+import CircularProgress from '@mui/material/CircularProgress';
+
+import List from '@mui/material/List';
 export function ContactList(){
 
     const isLoggedIn = useSelector(selectIsLoggedIn)
@@ -30,15 +34,16 @@ export function ContactList(){
       },[dispatch,isLoggedIn])
     return (
         <>
-        {status==="pending"&&<p>Loading...</p>}
+        {status==="pending"&& <CircularProgress style={{margin:"10px auto 10px auto",width:'50px',display:'block'}} />
+   }
         {status==="resolved"
         && contacts!==null
         &&
-        <ul>
+        <List>
             {visibleContacts.map(contact=>{
-                return <ItemContactForm contact={contact} handleDelete={()=>{ handleDeleteContact(contact.id)}}></ItemContactForm>
+                return <ItemContactForm key={contact.id} contact={contact} handleDelete={()=>{ handleDeleteContact(contact.id)}}></ItemContactForm>
             })}
-        </ul>
+        </List>
         }
         </>
       

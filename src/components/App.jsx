@@ -7,7 +7,7 @@ import { selectIsLoggedIn } from "../redux/user/selectors";
 import { useEffect } from "react";
 import { requestRefresh } from "redux/user/operations";
 import { ToastContainer} from 'react-toastify';
-const ContactsPage = lazy(() => import('../pages/Contacts'));
+const ContactsPage = lazy(() => import('../pages/Contacts/Contacts'));
 const HomePage = lazy(() => import('../pages/Home'));
 const RegisterPage = lazy(() => import('../pages/Register'));
 const LoginPage = lazy(() => import('../pages/Login'));

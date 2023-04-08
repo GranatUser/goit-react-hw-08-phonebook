@@ -2,7 +2,10 @@ import { useRef } from "react";
 import { useDispatch} from "react-redux";
 import { requestLogin} from "../../redux/user/operations";
 import { toast } from "react-toastify";
+import { RegisterFormStyled } from "../RegisterForm/RegisterForm.styled";
 
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
 
 export function LoginForm(){
 
@@ -12,8 +15,8 @@ export function LoginForm(){
     const handleSubmit = async(event)=>{
         event.preventDefault();
         const formData = {
-            email:emailInputRef.current.value,
-            password:passwordInputRef.current.value,
+            email:emailInputRef.current.querySelector('input').value,
+            password:passwordInputRef.current.querySelector('input').value,
         }
         
         try{
@@ -31,19 +34,14 @@ export function LoginForm(){
         }
     }
     return (
-        <div>
-            <h2>Login</h2>
-            <form onSubmit={handleSubmit}>
-                <label >
-                    <p>Email:</p>
-                    <input required ref={emailInputRef} type="email" name="userEmail" placeholder="OlegKunak@gmail.com" />
-                </label>
-                <label >
-                    <p>Password:</p>
-                    <input required minLength={6} ref={passwordInputRef} type="password" name="userPassword"/>
-                </label>
-                <button type="submit">Sign In</button>
-            </form>
-        </div>
+            <main>
+                 <h2>Login</h2>
+            <RegisterFormStyled onSubmit={handleSubmit} >
+                <TextField  fullWidth label="Email" variant="standard" required ref={emailInputRef} type="email" name="userEmail" placeholder="OlegKunak@gmail.com"/>
+                <TextField  fullWidth label="Password" variant="standard" required minLength={6} ref={passwordInputRef} type="password" name="userPassword" />
+                <Button type="submit" variant="contained">Sign In</Button>
+            </RegisterFormStyled>
+            </main>
     );
 }
+

@@ -3,6 +3,10 @@ import { useDispatch} from "react-redux";
 import { requestRegister } from "../../redux/user/operations";
 import { toast } from "react-toastify";
 
+import{RegisterFormStyled} from './RegisterForm.styled';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+
 export function RegisterForm(){
     const nameInputRef = useRef();
     const emailInputRef = useRef();
@@ -11,9 +15,9 @@ export function RegisterForm(){
     const handleSubmit = async(event)=>{
         event.preventDefault();
         const formData = {
-            name:nameInputRef.current.value,
-            email:emailInputRef.current.value,
-            password:passwordInputRef.current.value,
+            name:nameInputRef.current.querySelector('input').value,
+            email:emailInputRef.current.querySelector('input').value,
+            password:passwordInputRef.current.querySelector('input').value,
         }
         try{
             const responce = await dispatch(requestRegister(formData)).unwrap();
@@ -30,23 +34,14 @@ export function RegisterForm(){
         }
     }
     return (
-        <div>
+        <main>
             <h2>Register</h2>
-            <form onSubmit={handleSubmit}>
-                <label >
-                    <p>Name:</p>
-                    <input required ref={nameInputRef} type="text" name="userName" placeholder="Oleg Kunak" />
-                </label>
-                <label >
-                    <p>Email:</p>
-                    <input required ref={emailInputRef} type="email" name="userEmail" placeholder="OlegKunak@gmail.com" />
-                </label>
-                <label >
-                    <p>Password:</p>
-                    <input required minLength={6} ref={passwordInputRef} type="password" name="userPassword"/>
-                </label>
-                <button type="submit"> Sign Up</button>
-            </form>
-        </div>
+            <RegisterFormStyled onSubmit={handleSubmit} >
+             <TextField  fullWidth label="Name" variant="standard" required ref={nameInputRef} type="text" name="userName" placeholder="Oleg Kunak" />
+             <TextField  fullWidth label="Email" variant="standard" required ref={emailInputRef} type="email" name="userEmail" placeholder="OlegKunak@gmail.com"/>
+             <TextField  fullWidth label="Password" variant="standard" required minLength={6} ref={passwordInputRef} type="password" name="userPassword" />
+                <Button type="submit" variant="contained">Sign Up</Button>
+             </RegisterFormStyled>
+        </main>
     );
 }
