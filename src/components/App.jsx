@@ -1,31 +1,54 @@
-import React,{useEffect} from "react";
-import { ContactForm } from "./ContactForm";
-import { Filter } from "./Filter";
-import { ContactList } from "./ContactList";
+import React,{lazy} from "react";
+import { Route, Routes } from 'react-router-dom';
 import { AppStyled } from '../App.Styled';
-import { fetchContacts } from "../redux/operations";
+import { Layout } from './Layout';
 import { useDispatch, useSelector } from "react-redux";
-import { selectIsLoading, selectError } from "../redux/selectors";
+import { selectIsLoggedIn } from "../redux/user/selectors";
+import { useEffect } from "react";
+import { requestRefresh } from "redux/user/operations";
+import { ToastContainer} from 'react-toastify';
+
+const ContactsPage = lazy(() => import('../pages/Contacts'));
+const HomePage = lazy(() => import('../pages/Home'));
+const RegisterPage = lazy(() => import('../pages/Register'));
+const LoginPage = lazy(() => import('../pages/Login'));
 
 
 export function App() {
   const dispatch = useDispatch();
-  const isLoading = useSelector(selectIsLoading);
-  const error = useSelector(selectError);
-  useEffect(() => {
-    dispatch(fetchContacts());
-  }, [dispatch]);
-
-
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+  useEffect(()=>{
+    const token = localStorage.getItem('token');
+    if(isLoggedIn||!token) return;
+      const refresh = async()=>{
+        await dispatch(requestRefresh());
+      }
+      refresh();
+  },[dispatch,isLoggedIn]);
   return (
     <AppStyled>
-      <h1>Phonebook</h1>
-      <ContactForm/>
-      <h2>Contacts</h2>
-      <Filter />
-      {isLoading && <p>Loading...</p>}
-      {error && <p>Error</p>}
-      <ContactList />
+       <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route index element={<HomePage />} />
+        <Route
+          path="/register"
+          element={
+            <RegisterPage />
+          }
+        />
+        <Route
+          path="/login"
+          element={
+            <LoginPage />
+          }
+        />
+        <Route
+          path="/contacts"
+          element= {<ContactsPage/>}
+        />
+      </Route>
+    </Routes>
+    <ToastContainer/>
     </AppStyled>
 
   );
