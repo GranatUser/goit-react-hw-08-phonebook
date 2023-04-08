@@ -42,19 +42,7 @@ export const requestLogout=createAsyncThunk(
 )
 
 
-export const requestDeleteContact=createAsyncThunk(
-    'user/deleteContact',
-    async(contactID,thunkAPI)=>{
-        try{
-            const responce = await ContactsAPI.deleteContact(contactID);
 
-            return responce;
-        }
-        catch(e){
-            return thunkAPI.rejectWithValue(e.message);
-        }
-    }
-)
 export const requestRefresh=createAsyncThunk(
     'user/refresh',
     async(_,thunkAPI)=>{

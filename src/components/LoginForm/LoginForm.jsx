@@ -18,7 +18,7 @@ export function LoginForm(){
         
         try{
             const responce = await dispatch(requestLogin(formData)).unwrap();
-            toast.success(`User ${responce.user.name} successfully log in!`)
+            toast.success(`User ${responce.user.name} successfully entered!`)
         }
         catch(e){
             if(e==="Request failed with status code 400") {

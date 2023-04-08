@@ -7,12 +7,11 @@ import { selectIsLoggedIn } from "../redux/user/selectors";
 import { useEffect } from "react";
 import { requestRefresh } from "redux/user/operations";
 import { ToastContainer} from 'react-toastify';
-
 const ContactsPage = lazy(() => import('../pages/Contacts'));
 const HomePage = lazy(() => import('../pages/Home'));
 const RegisterPage = lazy(() => import('../pages/Register'));
 const LoginPage = lazy(() => import('../pages/Login'));
-
+const GoMain = lazy(() => import('./GoMain/GoMain'));
 
 export function App() {
   const dispatch = useDispatch();
@@ -24,11 +23,15 @@ export function App() {
         await dispatch(requestRefresh());
       }
       refresh();
-  },[dispatch,isLoggedIn]);
+  },[isLoggedIn,dispatch]);
   return (
     <AppStyled>
        <Routes>
       <Route path="/" element={<Layout />}>
+      <Route
+          path="*"
+          element= {<GoMain/>}
+        />
         <Route index element={<HomePage />} />
         <Route
           path="/register"
@@ -46,6 +49,7 @@ export function App() {
           path="/contacts"
           element= {<ContactsPage/>}
         />
+  
       </Route>
     </Routes>
     <ToastContainer/>
