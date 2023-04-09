@@ -19,8 +19,8 @@ export function App() {
   useEffect(()=>{
     const token = localStorage.getItem('token');
     if(isLoggedIn||!token) return;
-      const refresh = async()=>{
-        await dispatch(requestRefresh());
+      const refresh = ()=>{
+        dispatch(requestRefresh());
       }
       refresh();
   },[isLoggedIn,dispatch]);

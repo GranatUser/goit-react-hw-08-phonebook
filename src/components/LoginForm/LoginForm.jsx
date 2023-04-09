@@ -1,4 +1,3 @@
-import { useRef } from "react";
 import { useDispatch} from "react-redux";
 import { requestLogin} from "../../redux/user/operations";
 import { toast } from "react-toastify";
@@ -9,14 +8,13 @@ import Button from '@mui/material/Button';
 
 export function LoginForm(){
 
-    const emailInputRef = useRef();
-    const passwordInputRef = useRef();
     const dispatch = useDispatch();
     const handleSubmit = async(event)=>{
         event.preventDefault();
         const formData = {
-            email:emailInputRef.current.querySelector('input').value,
-            password:passwordInputRef.current.querySelector('input').value,
+           
+            email: event.currentTarget.elements.userEmail.value,
+            password: event.currentTarget.elements.userPassword.value,
         }
         
         try{
@@ -37,8 +35,8 @@ export function LoginForm(){
             <main>
                  <h2>Login</h2>
             <RegisterFormStyled onSubmit={handleSubmit} >
-                <TextField  fullWidth label="Email" variant="standard" required ref={emailInputRef} type="email" name="userEmail" placeholder="OlegKunak@gmail.com"/>
-                <TextField  fullWidth label="Password" variant="standard" required minLength={6} ref={passwordInputRef} type="password" name="userPassword" />
+                <TextField  fullWidth label="Email" variant="standard" required  type="email" name="userEmail" placeholder="OlegKunak@gmail.com"/>
+                <TextField  fullWidth label="Password" variant="standard" required minLength={6}  type="password" name="userPassword" />
                 <Button type="submit" variant="contained">Sign In</Button>
             </RegisterFormStyled>
             </main>

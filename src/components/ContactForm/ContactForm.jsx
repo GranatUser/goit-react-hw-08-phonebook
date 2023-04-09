@@ -5,18 +5,15 @@ import React from "react";
 import { useDispatch} from "react-redux";
 import { requestAddContact } from "../../redux/contacts/operations";
 import { toast } from "react-toastify";
-import { useRef } from "react";
 import { useSelector } from 'react-redux';
 import { selectContacts } from '../../redux/contacts/selectors';
 export function ContactForm() {
     const contacts = useSelector(selectContacts);
-    const nameInputRef = useRef();
-    const numberInputRef = useRef();
     const dispatch = useDispatch();
     const handleSubmit =async (event) => {
         event.preventDefault();
-        const name =  nameInputRef.current.querySelector('input').value;
-        const number = numberInputRef.current.querySelector('input').value;
+        const name =  event.currentTarget.elements.name.value;
+        const number =  event.currentTarget.elements.number.value;
 
         const existContact = contacts.find((contactApp) => { return contactApp.name === name });
         if (existContact !== undefined) {
@@ -31,22 +28,19 @@ export function ContactForm() {
                 toast.error(`Ooops.....Something went wrong`);
             
         }
-        reset();
+
+        event.target.reset();
    }
-  
-   const reset = ()=>{
-    nameInputRef.current.querySelector('input').value ="";
-    numberInputRef.current.querySelector('input').value ="";
-   }
+
     return (
         <form  onSubmit={handleSubmit}>
-             <TextField  fullWidth label="Name" variant="standard" ref={nameInputRef}
+             <TextField  fullWidth label="Name" variant="standard" 
                     type="text"
                     name="name"
                     pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
                     title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
                     required />
-             <TextField  fullWidth label="Email" variant="standard" ref={numberInputRef}
+             <TextField  fullWidth label="Email" variant="standard" 
                     type="tel"
                     name="number"
                     pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
